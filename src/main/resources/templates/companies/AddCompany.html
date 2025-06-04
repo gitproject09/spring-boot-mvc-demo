@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http//www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="col-6">
+            <form th:action="@{/companies}" th:object="${company}" method="post">
+                <div class="card mt-4">
+                    <p class="card-header">NEW Company</p>
+                    <div class="card-body p-2">
+                        <div class="row">
+                            <div class="form-group col-md-6 mb-4 mt-4">
+                                <label for="name">name :</label>
+                                <input type="text" th:field="*{name}" placeholder="company name" id="name" name="name"
+                                       class="form-control">
+                            </div>
+                            <div class="form-group col-md-6 mb-4 mt-4">
+                                <label for="name">country :</label>
+                                <input type="text" th:field="*{country}" placeholder="country" id="country"
+                                       name="country"
+                                       class="form-control">
+                            </div>
+                            <div class="form-group col-md-6 mb-4">
+                                <label for="name">CEO :</label>
+                                <input type="text" th:field="*{CEO}" placeholder="CEO" id="CEO" name="CEO"
+                                       class="form-control">
+                            </div>
+                            <div class="form-group col-md-6 mb-4">
+                                <label for="name">foundationDate :</label>
+                                <input type="date" th:field="*{foundationDate}" placeholder="foundation date"
+                                       id="foundationDate"
+                                       name="foundationDate" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6 mb-4">
+                                <label for="name">revenue :</label>
+                                <input type="number" th:field="*{revenue}" placeholder="revenue" id="revenue"
+                                       name="revenue"
+                                       class="form-control">
+                            </div>
+                            <div class="form-group col-md-6 mb-4">
+                                <label for="sector">Sector: </label>
+                                <select th:field="*{sector}" id="sector" class="form-select">
+                                    <option th:each="sector:${sectors}" th:value="${sector}"
+                                            th:text="${#strings.capitalize(sector.toString().replace('_',' '))}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col d-flex justify-content-end mb-1 me-2">
+                            <a class="btn btn-lg color-deep-sea-green panel-btn text-white btn-outline-dark"
+                               th:href="@{/companies/new}"><i
+                                    class="bi bi-plus-circle-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

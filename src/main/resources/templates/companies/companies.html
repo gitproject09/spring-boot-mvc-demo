@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http//www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-3">
+        <div class="card text-center">
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert"
+                        aria-label="close"></button>
+                <p th:utext="${error}" class="d-inline-block mb-0"></p>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row">
+                    <div class="col-6 d-flex align-items-start">
+                        <form th:action="@{/companies/page/1}" method="get">
+                            <label class="form-label">Search :</label>
+                            <input type="text" name="keyword" th:value="${keyword}"
+                                   placeholder="by company name">
+                            <button type="submit" class="btn btn-sm color-deep-sea-green text-white panel-btn"><i
+                                    class="bi bi-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end mb-1">
+                        <a class="btn btn-sm color-deep-sea-green text-white panel-btn" th:href="@{/companies/new}"><i
+                                class="bi bi-plus-circle-fill"></i></a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-sm border">
+                <thead>
+                <tr class="table text-white table-success h6">
+                    <th class="border color-deep-sea-green scale-default"></th>
+                    <th>Company</th>
+                    <th>CEO</th>
+                    <th>Revenu</th>
+                    <th class="border">Action</th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <tr th:each="company:${companyList}">
+                    <td class="border-end bg-light bg-gradient">
+                        <a class="btn btn-outline-dark btn-sm border-0"
+                           th:href="@{/companies/{id}(id=${company.id})}"> VIEW ️</a>
+                    </td>
+                    <td th:text="${company.name}"></td>
+                    <td th:text="${company.CEO}"></td>
+                    <td th:text="${company.revenue}"></td>
+                    <td class="bg-white border border-start">
+                        <a class="btn btn-outline-success btn-sm border-0 ms-1"
+                           th:href="@{/companies/{id}/edit(id=${company.id},keyword=${keyword},page=${currentPage})}">
+                            EDIT</a>
+                        <a class="btn btn-outline-danger btn-sm border-0"
+                           th:href="@{/companies/{id}/delete(id=${company.id})}">
+                            DELETE</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${totalPages>1}">
+            <div class="row">
+                <div class="col-6">
+                   <span class="border border-top-0 text-dark rounded-1 pe-1">
+                 Total Rows:
+                <span class="fw-bold">
+                    [[${totalItems}]]
+                </span>
+                 Total Pages:
+                <span class="fw-bold">
+                    [[${totalPages}]]
+                </span>
+            </span>
+                </div>
+                <div class="col-6">
+                    <nav>
+                        <ul class="pagination pagination-sm justify-content-end flex-wrap">
+                            <li class="page-item">
+                                <a th:if="${currentPage>1}" th:href="@{'/companies/page/1?keyword='+${keyword}}"
+                                   class="page-link">
+                                    First Page</a>
+                            </li>
+                            <li class="page-item">
+                                <a th:if="${currentPage>1}"
+                                   th:href="@{'/companies/page/'+${currentPage -1}+'?keyword='+${keyword}}"
+                                   class="page-link">
+                                    <<
+                                </a>
+                            </li>
+                            <li class="page-item"
+                                th:each="i: ${#numbers.sequence((currentPage>2)?(currentPage-2):1,(currentPage<totalPages-2)?(currentPage+2):totalPages)}">
+                                <a th:if="${currentPage!=i}"
+                                   th:href="@{'/companies/page/'+${i}+'?keyword='+${keyword}}"
+                                   th:classappend="${currentPage==i}?'page-link active':'page-link'">[[${i}]]</a>
+                                <span th:if="${currentPage==i}" class="page-link active">[[${i}]]</span>
+                            </li>
+                            <li class="page-item">
+                                <a th:if="${currentPage<totalPages}"
+                                   th:href="@{'/companies/page/' + ${currentPage+1}+'?keyword='+${keyword}}"
+                                   class="page-link">>></a>
+                            </li>
+                            <li class="page-item">
+                                <a th:if="${currentPage<totalPages}"
+                                   th:href="@{'/companies/page/' + ${totalPages}+'?keyword='+${keyword}}"
+                                   class="page-link">Last
+                                    Page</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

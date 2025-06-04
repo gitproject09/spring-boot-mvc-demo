@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http//www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row justify-content-center align-items-center">
+        <div class="card col-md-4 border-dark mt-4 mb-3">
+            <div class="row">
+                <div class="col-md-8 card-header">Détails :</div>
+                <div class="col-md-4 card-header justify-content-end">
+                    <td class="border-dark border-end">
+                        <a class="btn color-deep-sea-green text-white panel-btn border"
+                           th:href="@{/companies}">
+                            <i class="bi bi-arrow-left-circle"></i>️</a>
+                        <a class="btn color-deep-sea-green text-white panel-btn border"
+                           th:href="@{/companies/{id}/edit(id=${company.id})}">
+                            <i class="bi bi-pencil-fill"></i></a>
+                        <a class="btn color-deep-sea-green text-white panel-btn border"
+                           th:href="@{/companies/{id}/delete(id=${company.id})}">
+                            <i class="bi bi-trash-fill"></i></a>
+                    </td>
+                </div>
+            </div>
+            <div class="card-body">
+                <p><strong> name : </strong><span th:text="${company.name}"></span></p>
+                <p><strong> country : </strong><span th:text="${company.country}"></span></p>
+                <p><strong> CEO : </strong><span th:text="${company.CEO}"></span></p>
+                <p><strong> foundation Date : </strong><span th:text="${company.foundationDate}"></span></p>
+                <p><strong> revenue : </strong><span th:text="${company.revenue}"></span></p>
+                <p><strong> Sector : </strong>
+                    <span th:if="${company.sector != null}"
+                          th:text="${#strings.capitalize(company.sector.toString().replace('_',' '))}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
