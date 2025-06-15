@@ -5,6 +5,10 @@ import com.sopan.springbootmvcdemo.exception.CompanyNoSuchElementException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+/**
+ * Service interface for managing Company data.
+ * Defines core business operations for companies.
+ */
 public interface CompanyService {
 
     Page<CompanyDTO> findPaginatedCompanies(int pageNum, int pageSize);
